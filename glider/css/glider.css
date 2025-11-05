@@ -10,13 +10,26 @@ body {
     margin-right: auto;
     display: block;
     width: 640px;
-    height: 428px;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 512 / 342;
 }
 
 #arena {
   margin: 0 auto;
   width: 642px;
-  height: 430px;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    #canvas {
+        width: 100%;
+        height: auto;
+    }
+    
+    #arena {
+        width: 100%;
+    }
 }
 
 #instructions {

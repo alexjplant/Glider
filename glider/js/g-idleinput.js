@@ -52,4 +52,5 @@ function StartNewGame()
 
     ReadyRoom();
     gameName = '';
+    LastTickCount = TickCount();
 }

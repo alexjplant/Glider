@@ -82,9 +82,16 @@ letterRects[5] = SetRect(375, 253, 409, 298); //v
 letterRects[6] = SetRect(375, 165, 409, 210); //e
 letterRects[7] = SetRect(375, 297, 409, 342); //r
 let gameOverLetter = 0;
-let gameOverNextTime = TickCount();
 let gameOverDest = new Rect(0, 0, 0, 0);
 let gameOverShuffleCount = 0;
+let tickCountStart = performance.now();
+
+function TickCount()
+{
+    return ((performance.now() - tickCountStart) * 0.06);
+}
+
+let gameOverNextTime = 0;
 
 const gameOverTimeBetween = 6;
 
@@ -172,8 +179,7 @@ function LoWord(i)
 
 function TickCount()
 {
-    let t = new Date().getTime();
-    return (t * 0.06);
+    return ((performance.now() - tickCountStart) * 0.06);
 }
 
 

@@ -45,7 +45,7 @@ function LoadImages()
 
 function AnimFrame(){
 	Coordinate(); 
-	requestAnimationFrame(AnimFrame,canvas);
+	requestAnimationFrame(AnimFrame);
 }
 
 function ReadyToPlay() {
@@ -104,6 +104,66 @@ window.addEventListener(
 			e.preventDefault();
 	}
 )
+
+let canvasRect = null;
+let canvasRectUpdateTime = 0;
+
+function updateCanvasRect() {
+	canvasRect = canvas.getBoundingClientRect();
+	canvasRectUpdateTime = performance.now();
+}
+
+function handleTouchStart(e) {
+	if (!playing) return;
+	
+	const now = performance.now();
+	if (!canvasRect || (now - canvasRectUpdateTime) > 100) {
+		updateCanvasRect();
+	}
+	
+	const x = (e.touches ? e.touches[0].clientX : e.clientX) - canvasRect.left;
+	const y = (e.touches ? e.touches[0].clientY : e.clientY) - canvasRect.top;
+	const midY = canvasRect.height / 2;
+	const leftThird = canvasRect.width / 3;
+	const rightThird = canvasRect.width * 2 / 3;
+	
+	if (x < leftThird) {
+		theKeys[leftKey[0]] = true;
+	} else if (x > rightThird) {
+		theKeys[rightKey[0]] = true;
+	} else {
+		if (y < midY) {
+			theKeys[bandKey[0]] = true;
+		} else {
+			theKeys[energyKey[0]] = true;
+		}
+	}
+	
+	if (playing) {
+		e.preventDefault();
+	}
+}
+
+function handleTouchEnd(e) {
+	if (!playing) return;
+	e.preventDefault();
+	theKeys[leftKey[0]] = false;
+	theKeys[rightKey[0]] = false;
+	theKeys[bandKey[0]] = false;
+	theKeys[energyKey[0]] = false;
+}
+
+canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
+canvas.addEventListener('touchcancel', handleTouchEnd, { passive: false });
+canvas.addEventListener('mousedown', handleTouchStart);
+canvas.addEventListener('mouseup', handleTouchEnd);
+
+window.addEventListener('resize', function() {
+	canvasRect = null;
+});
+
+updateCanvasRect();
 
 startButton.addEventListener(
 	'click',
