@@ -1301,12 +1301,28 @@ function Coordinate()
 		frameTimeHistory.shift();
 	}
 	
+	skipDrawFrame = false;
+	
 	if (frameTimeHistory.length >= 5) {
 		const avgFrameTime = frameTimeHistory.reduce((a, b) => a + b, 0) / frameTimeHistory.length;
-		if (avgFrameTime > 33) {
-			adaptiveThreshold = Math.min(adaptiveThreshold + 0.1, 2.5);
+		
+		if (avgFrameTime > 50) {
+			adaptiveThreshold = Math.min(adaptiveThreshold + 0.3, 5.0);
+			consecutiveSlowFrames++;
+			if (consecutiveSlowFrames > 2) {
+				skipDrawFrame = true;
+			}
+		} else if (avgFrameTime > 33) {
+			adaptiveThreshold = Math.min(adaptiveThreshold + 0.25, 4.0);
+			consecutiveSlowFrames++;
+			if (consecutiveSlowFrames > 4) {
+				skipDrawFrame = true;
+			}
 		} else if (avgFrameTime < 20) {
-			adaptiveThreshold = Math.max(adaptiveThreshold - 0.05, 1.0);
+			adaptiveThreshold = Math.max(adaptiveThreshold - 0.05, isMobile ? 2.0 : 1.0);
+			consecutiveSlowFrames = 0;
+		} else {
+			consecutiveSlowFrames = Math.max(0, consecutiveSlowFrames - 1);
 		}
 	}
 	
@@ -1340,7 +1356,11 @@ function Coordinate()
 			if (hasWindow)
 				MonitorStorm();
 
-			DrawCScene();
+			framesSinceDraw++;
+			if (!skipDrawFrame || framesSinceDraw >= 3) {
+				DrawCScene();
+				framesSinceDraw = 0;
+			}
 
 			if (scoreIsRolling)
 				BumpTheScore();

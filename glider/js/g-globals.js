@@ -312,6 +312,14 @@ let TimeEnteredRoom = 0;
 let frameTimeHistory = [];
 let adaptiveThreshold = 1.5;
 let lastFrameTime = performance.now();
+let skipDrawFrame = false;
+let consecutiveSlowFrames = 0;
+let framesSinceDraw = 0;
+
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+if (isMobile) {
+	adaptiveThreshold = 2.5;
+}
 
 let theLightning = new LightningRec();
 
