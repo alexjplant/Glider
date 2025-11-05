@@ -316,11 +316,11 @@ for(let i = 0; i < 128; i++)
   theKeys[i] = false;
 
 // Customisable in the original
-let leftKey = 37;
-let rightKey = 39;
-let energyKey = 13;
-let bandKey = 32;
-let pauseKey = 27;
+let leftKey = [37, 65];
+let rightKey = [39, 68];
+let energyKey = [13, 74];
+let bandKey = [32, 75];
+let pauseKey = [27, 80];
 
 let screenCanvas = document.getElementById('canvas');
 let screenContext = screenCanvas.getContext('2d');

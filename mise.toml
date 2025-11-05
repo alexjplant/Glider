@@ -1,0 +1,7 @@
+[tools]
+node = "25.1.0"
+"npm:wrangler" = "4.45.4"
+
+[tasks]
+[tasks.deploy]
+run = "wrangler pages deploy ./glider --project-name=glider"

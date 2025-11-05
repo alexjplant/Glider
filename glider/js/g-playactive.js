@@ -467,7 +467,7 @@ function GetInput()
 {
 	if(controlMethod == holdKey)
 	{
-		if (theKeys[leftKey]) 
+		if (leftKey.some(key => theKeys[key])) 
 		{
 			if (theGlider.isRight) 
 			{
@@ -482,7 +482,7 @@ function GetInput()
 				theGlider.forVel = -kMaxThrust;
 			}
 		}
-		else if (theKeys[rightKey]) 
+		else if (rightKey.some(key => theKeys[key]))
 		{
 			if (theGlider.isRight)
 			{
@@ -514,9 +514,9 @@ function GetInput()
 			}
 		}
 
-		if (theKeys[bandKey] && (!bandBorne))		// fire rubber bands
+		if (bandKey.some(key => theKeys[key]) && (!bandBorne))		// fire rubber bands
 			FireBand();
-		if (theKeys[energyKey])
+		if (energyKey.some(key => theKeys[key]))
 		{
 			if (((theGlider.isRight) && (theGlider.isForward)) ||
 				((! theGlider.isRight) && (! theGlider.isForward)))
@@ -532,7 +532,7 @@ function GetInput()
 			theGlider.forVel = kMaxThrust
 		else
 			theGlider.forVel = -kMaxThrust;
-		if (theKeys[leftKey]) 
+		if (leftKey.some(key => theKeys[key])) 
 		{
 			if (theGlider.isRight) 
 			{
@@ -548,7 +548,7 @@ function GetInput()
 				theGlider.forVel = -kMaxThrust;
 			}
 		}
-		else if (theKeys[rightKey]) 
+		else if (rightKey.some(key => theKeys[key]))
 		{
 			if (theGlider.isRight)
 			{
@@ -563,9 +563,9 @@ function GetInput()
 				theGlider.forVel = kMaxThrust;
 			}
 		}
-		if (theKeys[bandKey] && (! bandBorne))	//fire rubber bands}
+		if (bandKey.some(key => theKeys[key]) && (! bandBorne))	//fire rubber bands}
 			FireBand();
-		if (theKeys[energyKey])
+		if (energyKey.some(key => theKeys[key]))
 		{
 			if (((theGlider.isRight) && (theGlider.isForward)) || 
 				((! theGlider.isRight) && (! theGlider.isForward)))
