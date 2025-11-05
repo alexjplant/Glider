@@ -1290,7 +1290,27 @@ function Coordinate()
 	}
 
 
-	if(Math.round(thisTickCount - LastTickCount) < 2)
+	let tickDelta = thisTickCount - LastTickCount;
+	
+	const now = performance.now();
+	const frameTime = now - lastFrameTime;
+	lastFrameTime = now;
+	
+	frameTimeHistory.push(frameTime);
+	if (frameTimeHistory.length > 10) {
+		frameTimeHistory.shift();
+	}
+	
+	if (frameTimeHistory.length >= 5) {
+		const avgFrameTime = frameTimeHistory.reduce((a, b) => a + b, 0) / frameTimeHistory.length;
+		if (avgFrameTime > 33) {
+			adaptiveThreshold = Math.min(adaptiveThreshold + 0.1, 2.5);
+		} else if (avgFrameTime < 20) {
+			adaptiveThreshold = Math.max(adaptiveThreshold - 0.05, 1.0);
+		}
+	}
+	
+	if(tickDelta < adaptiveThreshold)
 		return;
 	LastTickCount = thisTickCount;
 	if (playing && (!pausing)) 

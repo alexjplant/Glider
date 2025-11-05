@@ -1,5 +1,9 @@
 body {
     background: rgba(128, 128, 128, 0.3);
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 #canvas {
@@ -13,12 +17,20 @@ body {
     max-width: 100%;
     height: auto;
     aspect-ratio: 512 / 342;
+    will-change: contents;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
 }
 
 #arena {
   margin: 0 auto;
   width: 642px;
   max-width: 100%;
+  will-change: contents;
+  transform: translateZ(0);
 }
 
 @media (max-width: 768px) {

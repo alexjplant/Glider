@@ -309,6 +309,10 @@ let downOffset = 0;
 let LastTickCount = 0;
 let TimeEnteredRoom = 0;
 
+let frameTimeHistory = [];
+let adaptiveThreshold = 1.5;
+let lastFrameTime = performance.now();
+
 let theLightning = new LightningRec();
 
 let theKeys = new Array(128);
@@ -323,18 +327,35 @@ let bandKey = [32, 75];
 let pauseKey = [27, 80];
 
 let screenCanvas = document.getElementById('canvas');
-let screenContext = screenCanvas.getContext('2d');
+let screenContext = screenCanvas.getContext('2d', {
+	alpha: false,
+	desynchronized: true,
+	willReadFrequently: false
+});
+screenContext.imageSmoothingEnabled = false;
+screenContext.imageSmoothingQuality = 'low';
+
 let maskCanvas = document.createElement('canvas');
-let maskContext = maskCanvas.getContext('2d');
+let maskContext = maskCanvas.getContext('2d', {
+	alpha: true,
+	desynchronized: true,
+	willReadFrequently: false
+});
 maskCanvas.width = screenCanvas.width;
 maskCanvas.height = screenCanvas.height;
+maskContext.imageSmoothingEnabled = false;
 
 let musicAudio = null;
 
 let offscreenCanvas = document.createElement('canvas');
-let offscreenContext = offscreenCanvas.getContext('2d');
+let offscreenContext = offscreenCanvas.getContext('2d', {
+	alpha: false,
+	desynchronized: true,
+	willReadFrequently: false
+});
 offscreenCanvas.width = screenCanvas.width;
 offscreenCanvas.height = screenCanvas.height;
+offscreenContext.imageSmoothingEnabled = false;
 
 let canvas = screenCanvas;
 let context = screenContext;

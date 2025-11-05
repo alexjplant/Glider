@@ -117,7 +117,7 @@ function handleTouchStart(e) {
 	if (!playing) return;
 	
 	const now = performance.now();
-	if (!canvasRect || (now - canvasRectUpdateTime) > 100) {
+	if (!canvasRect || (now - canvasRectUpdateTime) > 500) {
 		updateCanvasRect();
 	}
 	
